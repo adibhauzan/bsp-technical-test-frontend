@@ -1,0 +1,9 @@
+.section {
+   @apply relative flex h-full pb-12  gap-4 sm:h-[calc(233vh_-_90px)] 
+}
+
+.container {
+   @apply  absolute z-10 hidden h-full w-[200px] max-w-full flex-none space-y-4 p-4 xl:relative xl:block xl:h-auto ltr:rounded-r-none ltr:xl:rounded-r-md rtl:rounded-l-none rtl:xl:rounded-l-md
+  
+}
+

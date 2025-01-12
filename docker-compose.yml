@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: bsp-test-fe
+    restart: always
+    image: adibhauzan/bsp_test_frontend:v1-dev
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=Asia/Jakarta
+      - NEXT_PUBLIC_URL=backend/api/v1
+      - DEBUG=next:*
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    env_file:
+      - .env
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
