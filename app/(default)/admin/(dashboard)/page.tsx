@@ -15,7 +15,7 @@ export default function AdminLayout() {
   return (
     <div className="flex">
       {/* Berikan level sebagai prop ke DynamicSidebar */}
-      <p>KONTOL</p>
+      <p>KONTOL + MEMEK</p>
       {/* <DynamicSidebar level={[decoded.Level]} /> */}
     </div>
   );

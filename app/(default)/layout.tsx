@@ -30,7 +30,7 @@ export default function DefaultLayout({
         <Overlay />
         <ScrollToTop />
         <MainContainer>
-          <div className="main-content flex min-h-screen flex-col">
+          <div className="flex min-h-screen ">
             <Sidebar level={[level]} />
             <div className="px-3 py-2 md:px-6 md:py-1"></div>
             <ContentAnimation>{children}</ContentAnimation>
