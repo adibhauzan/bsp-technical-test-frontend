@@ -6,6 +6,11 @@ import "simplebar-react/dist/simplebar.min.css";
 import "react-quill/dist/quill.snow.css";
 import "tippy.js/dist/tippy.css";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  ColorSchemeScript,
+  MantineProvider,
+  mantineHtmlProps,
+} from "@mantine/core";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
@@ -29,9 +34,15 @@ export default async function Layout({
   const access_token = cookies().get("access_token")?.value;
 
   return (
-    <html lang="id">
+    <html lang="id" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={inter.variable}>
-        <ProviderComponent token={access_token}>{children}</ProviderComponent>
+        <ProviderComponent token={access_token}>
+          {" "}
+          <MantineProvider>{children}</MantineProvider>
+        </ProviderComponent>
       </body>
     </html>
   );

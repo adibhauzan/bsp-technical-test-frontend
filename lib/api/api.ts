@@ -243,3 +243,34 @@ export const DELETENEW = async (
     return { code: 500, message: error.message, data: null, status: "ERROR" };
   }
 };
+
+export const APPROVE = async (
+  path: string,
+  data?: any,
+  token?: string,
+  isFormData?: boolean
+) => {
+  const header: { [key: string]: string } = {
+    Authorization: `Bearer ${token || null}`,
+  };
+
+  if (!isFormData) {
+    header["Content-Type"] = "application/json";
+  }
+
+  const endpoint = `${BASE_URL}/${path}${"/approve"}`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "PUT",
+      headers: header,
+      body: isFormData ? data : JSON.stringify(data),
+      next: { tags: [path] },
+    });
+
+    const response = await res.json();
+    return response;
+  } catch (error: any) {
+    return { code: 500, message: error.message, data: null, status: "ERROR" };
+  }
+};

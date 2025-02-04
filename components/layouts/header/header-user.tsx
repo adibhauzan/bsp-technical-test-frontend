@@ -81,60 +81,61 @@ const HeaderUser = () => {
   //   }
 
   return (
-    <div className="dropdown flex shrink-0">
-      <Dropdown
-        offset={[0, 0]}
-        placement="bottom-end"
-        btnClassName="relative group block"
-        button={
-          <Image
-            className="h-9 w-9 rounded-full object-cover"
-            src={imageProfileURL || "/assets/images/gedung-bsp-low.png"}
-            alt="userProfile"
-            width={40}
-            height={40}
-          />
-        }
-      >
-        <ul className="w-[350px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
-          <li>
-            <div className="flex items-center px-4 py-2">
-              <Image
-                className="h-12 w-12 rounded-md object-cover"
-                src={imageProfileURL || "/assets/images/gedung-bsp-low.png"}
-                alt="userProfile"
-                width={36}
-                height={36}
-              />
-              <div className="pl-4">
-                <h4 className="text-base">{user?.name}</h4>
-                <span className="rounded bg-success-light px-1 text-xs text-success">
-                  {decodedToken?.aud}
-                </span>
-                <button
-                  type="button"
-                  className="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
-                >
-                  {user?.email}
-                </button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <Link
-              href={`${decodedToken?.Level === "1" ? "/admin" : "/customer"}/profil`}
-              className="dark:hover:text-white"
-            >
-              <IconUser className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-            </Link>
-          </li>
+    <></>
+    // <div className="dropdown flex shrink-0">
+    //   <Dropdown
+    //     offset={[0, 0]}
+    //     placement="bottom-end"
+    //     btnClassName="relative group block"
+    //     button={
+    //       <Image
+    //         className="h-9 w-9 rounded-full object-cover"
+    //         src={imageProfileURL || "/assets/images/gedung-bsp-low.png"}
+    //         alt="userProfile"
+    //         width={40}
+    //         height={40}
+    //       />
+    //     }
+    //   >
+    //     <ul className="w-[350px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
+    //       <li>
+    //         <div className="flex items-center px-4 py-2">
+    //           <Image
+    //             className="h-12 w-12 rounded-md object-cover"
+    //             src={imageProfileURL || "/assets/images/gedung-bsp-low.png"}
+    //             alt="userProfile"
+    //             width={36}
+    //             height={36}
+    //           />
+    //           <div className="pl-4">
+    //             <h4 className="text-base">{user?.name}</h4>
+    //             <span className="rounded bg-success-light px-1 text-xs text-success">
+    //               {decodedToken?.aud}
+    //             </span>
+    //             <button
+    //               type="button"
+    //               className="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
+    //             >
+    //               {user?.email}
+    //             </button>
+    //           </div>
+    //         </div>
+    //       </li>
+    //       <li>
+    //         <Link
+    //           href={`${decodedToken?.Level === "1" ? "/admin" : "/customer"}/profil`}
+    //           className="dark:hover:text-white"
+    //         >
+    //           <IconUser className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
+    //         </Link>
+    //       </li>
 
-          <li className="border-t border-white-light dark:border-white-light/10">
-            <LogoutModal token={token ?? ""} title="Logout" />
-          </li>
-        </ul>
-      </Dropdown>
-    </div>
+    //       <li className="border-t border-white-light dark:border-white-light/10">
+    //         <LogoutModal token={token ?? ""} title="Logout" />
+    //       </li>
+    //     </ul>
+    //   </Dropdown>
+    // </div>
   );
 };
 

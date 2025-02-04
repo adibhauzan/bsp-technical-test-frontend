@@ -17,9 +17,6 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  //   const tHeader = useTranslations("Layout.header");
-  //   const tSidebar = useTranslations("Layout.sidebar");
-
   const access_token = cookies().get("access_token")?.value;
   const level = getDecodedToken(access_token ?? "").Level;
 
@@ -27,11 +24,12 @@ export default function DefaultLayout({
     <>
       {/* BEGIN MAIN CONTAINER */}
       <div className="relative">
-        <Overlay />
-        <ScrollToTop />
         <MainContainer>
+          <Overlay />
+          <ScrollToTop />
           <div className="flex min-h-screen ">
-            <Sidebar level={[level]} />
+            <Header />
+            <Sidebar level={[level]} token={access_token ?? ""} />
             <div className="px-3 py-2 md:px-6 md:py-1"></div>
             <ContentAnimation>{children}</ContentAnimation>
           </div>

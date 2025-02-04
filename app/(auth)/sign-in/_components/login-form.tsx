@@ -29,37 +29,7 @@ type Props = {
   submit: string;
 };
 
-interface Forms {
-  form_name: string;
-  xText_ID: string;
-  xText_EN: string;
-  xType: string;
-  xActive: number;
-  xURL: string;
-  xIcon: string;
-  permissions: string[];
-  menus: any[];
-}
-
-const initialState = {
-  isDarkMode: false,
-  sidebar: false,
-  menu: themeConfig.menu,
-  rtlClass: themeConfig.rtlClass,
-  theme: themeConfig.theme,
-  layout: themeConfig.layout,
-  animation: themeConfig.animation,
-  // user: null as User | null,
-  id: 0,
-  name: "",
-  email: "",
-  level: "",
-  image_profile: "",
-  forms: [] as Forms[],
-};
-type ThemeState = typeof initialState;
-
-const ClientLoginForm = ({ props }: { props: Props }) => {
+const LoginForm = ({ props }: { props: Props }) => {
   const [isVerified, setIsverified] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { fetchUserData } = useTheme();
@@ -68,69 +38,57 @@ const ClientLoginForm = ({ props }: { props: Props }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: LoginFormValues) => {
-    await API.POST("auth/login", data, "", true)
-      .then(async (res: any) => {
-        if (res.code === 200) {
-          const { access_token } = res.data;
-          const decoded = getDecodedToken(access_token);
-          console.log(decoded);
-          const loggedInUser = await getLoggedInUser(access_token);
+    try {
+      const res: any = await API.POST("auth/login", data, "", true);
+      console.log("Response:", res);
 
-          console.log(loggedInUser);
-          if (loggedInUser.code === 200) {
-            const data = loggedInUser.data?.user;
-            if (decoded.Level === "1") {
-              setCookie("access_token", access_token);
-              setIsSuccess(true);
-              router.push("/admin");
+      if (res.code === 200) {
+        const { access_token } = res.data;
+        const decoded = getDecodedToken(access_token);
+        console.log("Decoded Token:", decoded);
 
-              toast.fire({
-                icon: "success",
-                title: `Welcome to dashboard, ${data?.name}`,
-                padding: "10px 20px",
-              });
-            } else if (decoded.Level === "2" || decoded.Level === "3") {
-              await API.POST("auth/logout", {}, access_token, true);
-              setCookie("access_token", "", { maxAge: -1 });
-              toast.fire({
-                icon: "error",
-                title: "User not found.",
-                padding: "10px 20px",
-              });
-            }
-            fetchUserData(access_token);
-          } else {
-            await API.POST("auth/logout", {}, access_token, true);
-            toast.fire({
-              icon: "error",
-              title: "You are not authorized",
-              padding: "10px 20px",
-            });
+        const loggedInUser = await getLoggedInUser(access_token);
+        if (loggedInUser.code === 200) {
+          const data = loggedInUser?.data;
+          setCookie("access_token", access_token);
+
+          setIsSuccess(true);
+
+          if (decoded.Level === "1") {
+            router.push("/admin");
+          } else if (decoded.Level === "2") {
+            router.push("/customer");
           }
-        } else if (
-          res.code === 400 &&
-          res.message === "email or password incorrect"
-        ) {
+
           toast.fire({
-            icon: "error",
-            titleText: `ERROR\n${res.message}`,
-            padding: "10px 20px",
-          });
-        } else {
-          toast.fire({
-            icon: "error",
-            titleText: `${res.code} - ${res.status}\n${res.message}`,
+            icon: "success",
+            title: `Welcome to dashboard, ${data?.name}`,
             padding: "10px 20px",
           });
         }
-      })
-      .catch((error: Error) => {
+        fetchUserData(access_token);
+      } else if (res.code === 400) {
+        console.log("Error from server:", res.message);
         toast.fire({
           icon: "error",
-          title: `catch error: ${error.message}`,
+          titleText: `ERROR\n${res.message}`,
           padding: "10px 20px",
         });
+      } else {
+        toast.fire({
+          icon: "error",
+          titleText: `${res.code} - ${res.status}\n${res.message}`,
+          padding: "10px 20px",
+        });
+      }
+    } catch (error: any) {
+      console.log("Catch Error:", error);
+      toast.fire({
+        icon: "error",
+        title: `catch error: ${error.response?.data?.message || error.message}`,
+        padding: "10px 20px",
       });
+    }
   };
 
   return (
@@ -181,7 +139,7 @@ const ClientLoginForm = ({ props }: { props: Props }) => {
                         id="custom_switch_checkbox2"
                         onChange={() => setShowPassword(!showPassword)}
                       />
-                      <IconHidePasswordEye className="hidden text-primary peer-checked:block" />
+                      <IconHidePasswordEye className="hidden text-slate-400 peer-checked:block" />
                       <IconShowPassword className="peer-checked:hidden" />
                     </label>
                   </div>
@@ -205,4 +163,4 @@ const ClientLoginForm = ({ props }: { props: Props }) => {
   );
 };
 
-export default ClientLoginForm;
+export default LoginForm;

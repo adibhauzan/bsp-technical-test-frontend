@@ -1,7 +1,4 @@
-import Image from "next/image";
-import ClientLoginForm from "./_components/login-form";
-import { Metadata } from "next";
-import Link from "next/link";
+import LoginForm from "./_components/login-form";
 
 export default function SignInPage() {
   const signInLocale = {
@@ -12,12 +9,9 @@ export default function SignInPage() {
     submit: "submit",
   };
 
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-
   return (
     <div className="relative grid h-svh items-center justify-center bg-cover bg-bottom lg:max-w-none lg:px-0">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#ffff]/60 to-primary/60" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/60" />
       <div className="relative rounded-xl bg-gray-100/80">
         <div className="relative m-1.5 rounded-xl bg-white/85 p-6 md:w-[400px] md:p-8">
           <div className="mb-6 flex flex-col space-y-6">
@@ -25,7 +19,7 @@ export default function SignInPage() {
               Login
             </h1>
           </div>
-          <ClientLoginForm props={signInLocale} />
+          <LoginForm props={signInLocale} />
         </div>
       </div>
     </div>

@@ -4,20 +4,20 @@ import { cookies } from "next/headers";
 import { getCookie, getDecodedToken } from "@/lib/jwt";
 import { Metadata } from "next";
 import SectionError from "@/components/errors/error-page";
+import DataTable from "./_components/table";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "dashboard",
 };
 
-export default function AdminLayout() {
+export default function AdminPage() {
   const access_token = cookies().get("access_token")?.value;
   if (!access_token) {
     return <SectionError response={{ code: 401, message: "Unauthorized" }} />;
   }
-
   return (
     <div className="flex">
-      <p>Dashboard</p>
+      <DataTable token={access_token} />
     </div>
   );
 }

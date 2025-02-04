@@ -19,6 +19,7 @@ export async function middleware(req: NextRequest) {
   if (isProtectedRoute && access_token) {
     const decodedToken = getDecodedToken(access_token);
     if (decodedToken.Level === "1" && !path.startsWith("/admin")) {
+      console.log(decodedToken.Level === "1");
       return NextResponse.redirect(new URL("/admin", req.url));
     } else if (decodedToken.Level === "2" && !path.startsWith("/customer")) {
       return NextResponse.redirect(new URL("/customer", req.url));
